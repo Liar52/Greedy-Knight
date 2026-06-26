@@ -1,8 +1,14 @@
+using System.Collections;
 using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
-    public float playerSpeed = 6;
+    public float baseSpeed = 6f;
+    public float speedIncreasePerMeter = 0.05f; 
+    public float maxSpeed = 15f; 
+
+    public float playerSpeed; 
+
     public float horizontalSpeed = 3;
     public float rightLimit = 5.5f;
     public float leftLimit = -5.5f;
@@ -10,7 +16,9 @@ public class PlayerMovement : MonoBehaviour
     public float jumpForce = 7f;
     public float groundCheckDistance = 0.2f;
     public LayerMask groundLayer;
-    public Transform groundCheck; // arrastrá aquí el objeto "GroundCheck"
+    public Transform groundCheck;
+
+    [SerializeField] bool isRunning;
 
     private Rigidbody rb;
     private bool isGrounded;
@@ -22,6 +30,16 @@ public class PlayerMovement : MonoBehaviour
 
     void Update()
     {
+       if (GameOverManager.isGameOver) return;
+       
+        playerSpeed = Mathf.Min(baseSpeed + (MasterInfo.distanceRun * speedIncreasePerMeter), maxSpeed);
+
+        if (isRunning == false)
+        {
+            isRunning = true;
+            StartCoroutine(AddDistance());
+        }
+
         transform.Translate(Vector3.forward * Time.deltaTime * playerSpeed, Space.World);
 
         if (Input.GetKey(KeyCode.A))
@@ -41,6 +59,24 @@ public class PlayerMovement : MonoBehaviour
         if ((Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.Space)) && isGrounded)
         {
             rb.linearVelocity = new Vector3(rb.linearVelocity.x, jumpForce, rb.linearVelocity.z);
+        }
+    }
+
+    IEnumerator AddDistance()
+    {
+        yield return new WaitForSeconds(0.65f);
+        MasterInfo.AddDistance(1f);
+        isRunning = false;
+    }
+
+    void OnTriggerEnter(Collider other)
+    {
+        Debug.Log("Trigger detectado con: " + other.gameObject.name + " - Tag: " + other.tag);
+
+        if (other.CompareTag("Obstacle"))
+        {
+            Debug.Log("Es un obstáculo, llamando Game Over");
+            GameOverManager.TriggerGameOver();
         }
     }
 }

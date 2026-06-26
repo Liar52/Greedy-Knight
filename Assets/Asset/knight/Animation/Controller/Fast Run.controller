@@ -8,13 +8,7 @@ AnimatorController:
   m_PrefabAsset: {fileID: 0}
   m_Name: Fast Run
   serializedVersion: 5
-  m_AnimatorParameters:
-  - m_Name: isGrounded
-    m_Type: 4
-    m_DefaultFloat: 0
-    m_DefaultInt: 0
-    m_DefaultBool: 0
-    m_Controller: {fileID: 9100000}
+  m_AnimatorParameters: []
   m_AnimatorLayers:
   - serializedVersion: 5
     m_Name: Base Layer
@@ -41,8 +35,8 @@ AnimatorStateMachine:
     m_State: {fileID: 6359538481487070621}
     m_Position: {x: 370, y: 110, z: 0}
   - serializedVersion: 1
-    m_State: {fileID: 7042420029568981421}
-    m_Position: {x: 370, y: -20, z: 0}
+    m_State: {fileID: 6959444318295884104}
+    m_Position: {x: 380, y: 0, z: 0}
   m_ChildStateMachines: []
   m_AnyStateTransitions: []
   m_EntryTransitions: []
@@ -79,14 +73,14 @@ AnimatorState:
   m_MirrorParameter: 
   m_CycleOffsetParameter: 
   m_TimeParameter: 
---- !u!1102 &7042420029568981421
+--- !u!1102 &6959444318295884104
 AnimatorState:
   serializedVersion: 6
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Saltar
+  m_Name: Death
   m_Speed: 1
   m_CycleOffset: 0
   m_Transitions: []
@@ -99,7 +93,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: -203655887218126122, guid: f25a3e19ad6c89a478526647f91fb5f4, type: 3}
+  m_Motion: {fileID: -203655887218126122, guid: 5356fac01b57f74459333019888276d5, type: 3}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 

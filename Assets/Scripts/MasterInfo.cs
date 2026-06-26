@@ -4,8 +4,10 @@ using TMPro;
 public class MasterInfo : MonoBehaviour
 {
     public static int coinCount = 0;
+    public static float distanceRun = 0f;
 
     [SerializeField] TMP_Text coinCountText;
+    [SerializeField] TMP_Text distanceRunText;
 
     private static MasterInfo instance;
 
@@ -21,11 +23,20 @@ public class MasterInfo : MonoBehaviour
         UpdateUI();
     }
 
+    public static void AddDistance(float amount)
+    {
+        distanceRun += amount;
+        UpdateUI();
+    }
+
     static void UpdateUI()
     {
-        if (instance != null && instance.coinCountText != null)
-        {
+        if (instance == null) return;
+
+        if (instance.coinCountText != null)
             instance.coinCountText.text = "COINS : " + coinCount;
-        }
+
+        if (instance.distanceRunText != null)
+            instance.distanceRunText.text = "DISTANCE : " + Mathf.FloorToInt(distanceRun) + "m";
     }
 }
