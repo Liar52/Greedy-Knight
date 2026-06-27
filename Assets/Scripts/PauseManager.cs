@@ -3,16 +3,12 @@ using UnityEngine;
 public class PauseManager : MonoBehaviour
 {
     public static bool isPaused = false;
-    [SerializeField] GameObject pausePanel;
 
-    void Awake()
-    {
-        isPaused = false;
-        Time.timeScale = 1f;
-    }
+    [SerializeField] GameObject pausePanel;
 
     void Update()
     {
+        // No permitir pausa si ya es game over
         if (GameOverManager.isGameOver) return;
 
         if (Input.GetKeyDown(KeyCode.Escape))
@@ -27,14 +23,6 @@ public class PauseManager : MonoBehaviour
         isPaused = true;
         Time.timeScale = 0f;
         if (pausePanel != null) pausePanel.SetActive(true);
-
-        Rigidbody rb = FindObjectOfType<PlayerMovement>().GetComponent<Rigidbody>();
-        if (rb != null)
-        {
-            rb.linearVelocity = Vector3.zero;
-            rb.angularVelocity = Vector3.zero;
-            rb.isKinematic = true;
-        }
     }
 
     public void Resume()
@@ -42,21 +30,17 @@ public class PauseManager : MonoBehaviour
         isPaused = false;
         Time.timeScale = 1f;
         if (pausePanel != null) pausePanel.SetActive(false);
-
-        Rigidbody rb = FindObjectOfType<PlayerMovement>().GetComponent<Rigidbody>();
-        if (rb != null)
-        {
-            rb.isKinematic = false;
-        }
     }
 
+    // Para el botón "Reiniciar" en el panel de pausa
     public void RestartGame()
     {
-        Time.timeScale = 1f;
+        Time.timeScale = 1f; // importante: resetear antes de cargar escena
         UnityEngine.SceneManagement.SceneManager.LoadScene(
             UnityEngine.SceneManagement.SceneManager.GetActiveScene().name);
     }
 
+    // Para el botón "Salir al menú" (ajusta el nombre de la escena)
     public void GoToMainMenu()
     {
         Time.timeScale = 1f;

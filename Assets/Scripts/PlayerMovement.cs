@@ -4,18 +4,22 @@ using UnityEngine;
 public class PlayerMovement : MonoBehaviour
 {
     public float baseSpeed = 6f;
-    public float speedIncreasePerMeter = 0.05f;
-    public float maxSpeed = 15f;
-    public float playerSpeed;
+    public float speedIncreasePerMeter = 0.05f; 
+    public float maxSpeed = 15f; 
+
+    public float playerSpeed; 
+
     public float horizontalSpeed = 3;
     public float rightLimit = 5.5f;
     public float leftLimit = -5.5f;
+
     public float jumpForce = 7f;
     public float groundCheckDistance = 0.2f;
     public LayerMask groundLayer;
     public Transform groundCheck;
 
     [SerializeField] bool isRunning;
+
     private Rigidbody rb;
     private bool isGrounded;
 
@@ -26,9 +30,8 @@ public class PlayerMovement : MonoBehaviour
 
     void Update()
     {
-        if (GameOverManager.isGameOver) return;
-        if (PauseManager.isPaused) return; // ✅ fix: detiene al jugador en pausa
-
+       if (GameOverManager.isGameOver) return;
+       
         playerSpeed = Mathf.Min(baseSpeed + (MasterInfo.distanceRun * speedIncreasePerMeter), maxSpeed);
 
         if (isRunning == false)
@@ -44,7 +47,6 @@ public class PlayerMovement : MonoBehaviour
             if (transform.position.x > leftLimit)
                 transform.Translate(Vector3.left * Time.deltaTime * horizontalSpeed, Space.World);
         }
-
         if (Input.GetKey(KeyCode.D))
         {
             if (transform.position.x < rightLimit)
@@ -70,6 +72,7 @@ public class PlayerMovement : MonoBehaviour
     void OnTriggerEnter(Collider other)
     {
         Debug.Log("Trigger detectado con: " + other.gameObject.name + " - Tag: " + other.tag);
+
         if (other.CompareTag("Obstacle"))
         {
             Debug.Log("Es un obstáculo, llamando Game Over");
